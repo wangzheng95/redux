@@ -1,41 +1,35 @@
 import React, { Component } from 'react'
 import store from '../../redux/store'
+
 export default class Count extends Component {
   // state = {
   //   count: 0
   // }
-  componentDidMount () {
-    this.setState({})
-  }
+  
+  // 监听store的变化，从而重新渲染页面
+  // componentDidMount () {
+  //   store.subscribe(() => {
+  //     this.setState({})
+  //   })
+  // }
   increment = () => {
-    // console.log(this.selectVal.value);
-    // let newCount = this.state.count + this.selectVal.value*1
-    // this.setState({
-    //   count: newCount
-    // })
-    let data = this.selectVal.value*1
-    store.dispatch({type:'increment',data})
+    let newCount = this.selectVal.value*1
+    store.dispatch({type:'increment',data:newCount})
   }
   decrement = () => {
-    let newCount = this.state.count - this.selectVal.value*1
-    this.setState({
-      count: newCount
-    })
+    let newCount = this.selectVal.value*1
+    store.dispatch({type:'decrement',data:newCount})
   }
   incrementOdd = () => {
-    let newCount = this.state.count + this.selectVal.value*1
-    if(this.state.count % 2 === 0) {
-      this.setState({
-        count: newCount
-      })
+    let newCount = this.selectVal.value*1
+    if(store.getState() % 2 === 0) {
+      store.dispatch({type:'increment',data:newCount})
     }
   }
   incrementSync = () => {
-    let newCount = this.state.count + this.selectVal.value*1
+    let newCount = this.selectVal.value*1
     setTimeout(() => {
-      this.setState({
-        count: newCount
-      })
+      store.dispatch({type:'increment',data:newCount})
     }, 1000);
   }
   render() {
