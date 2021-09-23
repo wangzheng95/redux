@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-
-export default class Count extends Component {
+import { connect} from 'react-redux'
+import { createDecrementAction, createIncrementAction, createIncrementSyncAction } from '../../redux/count_action'
+class CountUI extends Component {
   increment = () => {
     let newCount = this.selectVal.value*1
     this.props.jia(newCount)
@@ -38,3 +39,17 @@ export default class Count extends Component {
     )
   }
 }
+
+function mapStateToProps (state) {
+  return {count:state}
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    jia: data => dispatch(createIncrementAction(data)),
+    jian: data => dispatch(createDecrementAction(data)),
+    jiaSync: (data,time) => dispatch(createIncrementSyncAction(data,time))
+  }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(CountUI)
